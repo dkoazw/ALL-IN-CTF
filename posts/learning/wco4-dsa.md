@@ -3,7 +3,7 @@
 ## Signing Server
 
 ### Đề bài
-![1](img/learning/wco4-dsa/1.png)
+![1](/img/learning/wco4-dsa/1.png)
 
 <details>
     <summary> <strong>13374.py</strong></summary>
@@ -69,7 +69,7 @@ print(long_to_bytes(int(signature, 16)).decode())
 ## Let's Decrypt
 
 ### Đề bài
-![2](img/learning/wco4-dsa/2.png)
+![2](/img/learning/wco4-dsa/2.png)
 
 <details>
     <summary> <strong>13391.py</strong></summary>
@@ -190,7 +190,7 @@ r.interactive()
 ## Blinding Light
 
 ### Đề bài 
-![3](img/learning/wco4-dsa/3.png)
+![3](/img/learning/wco4-dsa/3.png)
 
 <details>
     <summary> <strong>13376.py</strong></summary>
@@ -287,7 +287,7 @@ r.interactive()
 ## Vote for Pedro
 
 ### Đề bài 
-![4](img/learning/wco4-dsa/4.png)
+![4](/img/learning/wco4-dsa/4.png)
 
 <details>
     <summary> <strong>13375.py</strong></summary>
@@ -377,7 +377,7 @@ r.interactive()
 ## Let's Decrypt Again
 
 ### Đề bài 
-![5](img/learning/wco4-dsa/5.png)
+![5](/img/learning/wco4-dsa/5.png)
 
 <details>
     <summary> <strong>13394.py</strong></summary>
@@ -576,7 +576,7 @@ print(flag.decode())
 ## Digestive
 
 ### Đề bài 
-![6](img/learning/wco4-dsa/6.png)
+![6](/img/learning/wco4-dsa/6.png)
 **[play](https://web.cryptohack.org/digestive)**
 
 <details>
@@ -634,7 +634,7 @@ print(flag.decode())
 
 
 ### Ý tưởng 
-<img src="img/learning/wco4-dsa/6_1.png" width="450">
+</img src="/img/learning/wco4-dsa/6_1.png" width="450">
 
 - Khi ta nhập username thì server sẽ trả về msg và signature, trong đó msg có thông số admin = false. Nhiệm vụ của ta là phải làm cách nào để làm giả msg, khiến cho nó tồn tại thông số admin = true để có thể tìm flag.
 - Và vấn đề cũng đã được nhấn mạnh trong code:
@@ -650,14 +650,14 @@ class HashFunc:
 Với hàm digest, đúng ra thứ được trả về phải là hash sha256 nhưng ở đây nó lại trả về giá trị gốc. 
 - Và vì thế với `NIST192p` nó sẽ nhận 24 bytes đầu trong msg. Ví dụ ở ảnh trên thì nó sẽ lấy `{"admin": false, "userna` để check. 
 Từ đó ở khúc dưới thì ta có thể tùy ý thêm bất cứ thứ gì cũng được, điều này bao gồm cả việc ta add thêm `"admin": true` vào. Đó cũng là cách giải bài này.
-<img src="img/learning/wco4-dsa/6_2.png" width="450">
+</img src="/img/learning/wco4-dsa/6_2.png" width="450">
 
 > Nếu như hàm digest trả về hash sha256 thì bài toán sẽ hoàn toàn vô dụng bởi vì việc thêm 1 kí tự vào msg cũng khiến cho hash đó bị sai hoàn toàn.
 
 ## Curveball
 
 ### Đề bài 
-![7](img/learning/wco4-dsa/7.png)
+![7](/img/learning/wco4-dsa/7.png)
 
 <details>
     <summary> <strong>13382.py</strong></summary>
@@ -771,7 +771,7 @@ print(G)
 ## ProSign 3
 
 ### Đề bài 
-![8](img/learning/wco4-dsa/8.png)
+![8](/img/learning/wco4-dsa/8.png)
 
 <details>
     <summary> <strong>13381.py</strong></summary>
@@ -857,9 +857,9 @@ print(G)
 
 ### Ý tưởng 
 - Bài này dựa trên ECDSA
-![8_1](img/learning/wco4-dsa/8_1.png)
+![8_1](/img/learning/wco4-dsa/8_1.png)
 - Khi connect vào server thì thứ ta nhận được là m, r, s. Và về cơ bản nhiệm vụ của ta tức là phải tìm cách chứng minh ta thành chủ tin nhắn bằng cách xác định được d và k để tạo ra một cặp r, s hợp lệ. 
-![8_2](img/learning/wco4-dsa/8_2.png)
+![8_2](/img/learning/wco4-dsa/8_2.png)
 - Như trong đây đề cập thì trước hết, ta phải tìm được thằng d bằng cách $d \equiv r_{old}^{-1} (s_{old} * k_{old} - h_{old}) \pmod n$. Và $k_{old}$ ở đây chính là thằng k đã hình thành nên cặp $r_{old}$, $s_{old}$ và $h_{old}$ mà server gửi cho ta bằng cách: 
 ```python
 class Challenge():
@@ -936,7 +936,7 @@ for k_old in range(1, 61):
 ## No Random, No Bias 
 
 ### Đề bài 
-![9](img/learning/wco4-dsa/9.png)
+![9](/img/learning/wco4-dsa/9.png)
 
 <details>
     <summary> <strong>13381.py</strong></summary>
@@ -1261,7 +1261,7 @@ $$2^m \equiv y^{(p-1)/2}* (-2)^m \pmod p$$
 <details>
 <summary><strong>raw.jpeg</strong></summary>
 
-<img src="img/learning/wco4-dsa/raw.jpeg" width="450">
+</img src="/img/learning/wco4-dsa/raw.jpeg" width="450">
 
 </details>
 
