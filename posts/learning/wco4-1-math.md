@@ -27,9 +27,10 @@ print(gcd(a,b))
 
 ### Ý tưởng
 - Mục tiêu của bài này là tìm `egcd` của 2 số, nó được biểu diễn bằng công thức sau:
-$$
-a*p + b*q = GCD(a,b) 
-$$
+
+```math
+a \cdot p + b \cdot q = \gcd(a, b)
+```
 - Và để tìm `egcd` thì mình có một test case nhỏ như sau: Cho a = 26, b =15. Từ đó ta sẽ lập được 1 bảng egcd:
 
 | nums | p   | q   | Note    |
@@ -86,13 +87,16 @@ print(min(a,b))
 
 ### Ý tưởng
 Theo `Fermat's little theorem` - Định lý fermat nhỏ thì:
-$$
-a^{p-1} \equiv 1 \ (mod \ p)
-$$
+
+```math
+a^{p-1} \equiv 1 \pmod{p}
+```
+
 Và cũng như là:
-$$
-a^{p} \equiv a \ (mod \ p)
-$$
+
+```math
+a^{p} \equiv a \pmod{p}
+```
 
 ### Code 
 - Không có.
@@ -123,9 +127,10 @@ print(pow(3,-1,13))
 
 ### Ý tưởng
 - Ta gọi x là `Quadratic Residue` - lượng dư bậc 2 khi tồn tại a<29 (vì trong đề đang là 29):
-$$
-a^2 \equiv x \ (mod \  p)
-$$
+
+  ```math
+  a^2 \equiv x \pmod{p}
+  ```
 - Tuy nhiên ta chỉ cần tìm a trong khoảng p/2 vì ví dụ khi a = 1, $a^2 = 1$., còn khi a = 28, lúc này nó tương đương a = -1 và $a^2 = 1$.
 
 - Về lại bài toán, ta chỉ việc bruteforce để ra được 2 số và tìm số nhỏ nhất.
@@ -154,32 +159,41 @@ for i in range(29):
 
 ### Ý tưởng
 - Trước hết, để biết một số có phải là lượng dư bâc 2 không thì ta có `Legendre Symbol`, có công thức như sau:
-$$
-(x/p) \equiv x^{(p-1)/2} \ (mod \ p)
-$$
+
+```math
+(x/p) \equiv x^{(p-1)/2} \pmod{p}
+```
+
 Khi (x/p) = 1 thì nó là lượng dư bậc 2, các trường hợp còn lại có thể xem ảnh.
 
-- Và bình thường ta không thể cứ bruteforce để tính lượng dư bậc 2 được, từ đó ta sẽ chia ra được 2 trường hợp để tìm lượng dư bậc 2, và trường hợp dễ trong đó là khi $p \equiv 3 \ (mod \ 4)$. Ta có công thức như sau:
-$$
-a \equiv x^{(p+1)/4} \ (mod \ p)
-$$
+- Và bình thường ta không thể cứ bruteforce để tính lượng dư bậc 2 được, từ đó ta sẽ chia ra được 2 trường hợp để tìm lượng dư bậc 2, và trường hợp dễ trong đó là khi $p \equiv 3 \pmod{4}$. Ta có công thức như sau:
+
+```math
+a \equiv x^{(p+1)/4} \pmod{p}
+```
 (Vì $p+1 \ ⋮ \ 4$ nên phép tính trên mới thỏa mãn)
 - Mình sẽ chứng minh theo chiều nghịch như sau:
-$$
-a \equiv x^{(p+1)/4} \ (mod \ p)
-$$
+```math
+a \equiv x^{(p+1)/4} \pmod{p}
+```
+
 =>
-$$
-a^2 \equiv x^{(p+1)/2} \ (mod \ p)
-$$
-Mà $x^{(p-1)/2} \equiv 1 (mod \ p)$ nên ta có:
-$$
-a^2 \equiv x^{(p+1)/2} *x^{(p-1)/2} \ (mod \ p)
-$$
+
+```math
+a^2 \equiv x^{(p+1)/2} \pmod{p}
+```
+
+Mà $x^{(p-1)/2} \equiv 1 \pmod{p}$ nên ta có:
+
+```math
+a^2 \equiv x^{(p+1)/2} \cdot x^{(p-1)/2} \pmod{p}
+```
+
 Điều này tương đương:
-$$
-a^2 \equiv x^p \equiv x \ (mod \ p)
-$$
+
+```math
+a^2 \equiv x^p \equiv x \pmod{p}
+```
 Và định lý fermat nhỏ cũng chính là mấu chốt của phép tính này.
 
 ### Code
@@ -206,31 +220,33 @@ for i in ints:
 - 1. Mình sẽ tính `phi` của `p` bằng cách $phi = p - 1$. Sau đó mình sẽ chuyển `phi` thành dạng $phi = QS^2$, với Q là một số lẻ.
 - 2. Mình sẽ tìm một bất thặng dư bậc 2 của `p` bằng cách thử từng số nguyên tố i nhỏ, bởi vì những số bất thặng dư bậc 2 chiếm số lượng rất lớn, nên bạn có thể tạo một mảng chứa khoảng 50-100 số nếu sợ.
 - 3. Mình sẽ khởi tạo biến như sau:
-$$
+```math
 \begin{align}
 M &= S \\
 C &\equiv n^Q \pmod{p} \\
 t &\equiv a^q \pmod{p} \\
 R &\equiv a^{(q+1)/2} \pmod{p}
 \end{align}
-$$
+```
 - 4. Mình sẽ cho chạy vòng lặp tới khi $t=1$, và vòng lặp như sau:
-$$
+```math
 \begin{align}
-t^{2^i}  &\equiv 1 \ (mod \ p) \\
-b &\equiv C^{2^{M-i-1}} \ (mod \ p)
+t^{2^i}  &\equiv 1 \pmod{p} \\
+b &\equiv C^{2^{M-i-1}} \pmod{p}
 \end{align}
-$$
+```
+
 Với i là một số mà mình sẽ phải chạy vòng lặp để tìm nó.
 Giờ ta sẽ cập nhật:
-$$
+
+```math
 \begin{align}
 M &= i\\
-C  &\equiv b^2 \ (mod \ p) \\
-t &\equiv t*b \ (mod \ p ) \\
-R &\equiv R*b \ (mod \ p) 
+C  &\equiv b^2 \pmod{p} \\
+t &\equiv t \cdot b \pmod{p} \\
+R &\equiv R \cdot b \pmod{p}
 \end{align}
-$$
+```
 Đó là cách để tìm ra thặng dư bậc 2 với số $a \equiv 3 \ (mod \ 4)$
 - Còn đối với trường hợp sử dụng sage thì nó đơn giản hơn rât nhiều bằng cách tạo một trường module p, và tinh sqrt(x) để tìm ra a.
 
@@ -272,13 +288,13 @@ print(x%935)
 
 ### Ý tưởng
 - Khi đọc code thì mình đã thử test một tí và nhận ra là:
-$$
+```math
 (a/p) = 1
-$$
+```
 Mà ta lại có:
-$$
-(n/p) \equiv (a^e/p) \equiv (a/p) 
-$$
+```math
+(n/p) \equiv (a^e/p) \equiv (a/p)
+```
 Vì a là một thặng dư bậc 2 nên mọi $a^e$ cũng là thặng dư bậc 2 và n cũng vậy. Và vì thế nếu n là thặng dư bậc 2 thì mình append 1, nếu không phải thì append 0.
 
 ### Code 
@@ -312,30 +328,32 @@ print(flag)
 Note: thành thật mà nói thì mình đã giải lại bài này lần thứ 4 hay 5 rồi =))) và lần đầu tiên giải thì mình có sử dụng llm. Nên mình sẽ không có flow tư duy để giải ra bài này mà chỉ đơn thuần là kinh nghiệm từ những lần giải trước.
 
 Ta có:
-$$
+```math
 \begin{align}
 c_1 &\equiv (2p + 3q)^{e_1} \pmod{N} \\
 c_2 &\equiv (5p + 7q)^{e_2} \pmod{N}
 \end{align}
-$$
+```
+
 Từ đó suy ra:
-$$
+
+```math
 \begin{align}
-A = c_1^{e_2} &\equiv (2p + 3q)^{e_1*{e_2}} \pmod{N} \\
-B = c_2^{e_1} &\equiv (5p + 7q)^{e_2*{e_2}} \pmod{N}
+A = c_1^{e_2} &\equiv (2p + 3q)^{e_1 \cdot e_2} \pmod{N} \\
+B = c_2^{e_1} &\equiv (5p + 7q)^{e_2 \cdot e_1} \pmod{N}
 \end{align}
-$$
+```
 Và ta có thể thực hiện một chút biến đổi như sau:
-$$
+```math
 \begin{align}
-A = c_1^{e_2} &\equiv (2p)^{e_1*{e_2}} \pmod{q} \\
-B = c_2^{e_1} &\equiv (5p)^{e_2*{e_2}} \pmod{q}
+A = c_1^{e_2} &\equiv (2p)^{e_1 \cdot e_2} \pmod{q} \\
+B = c_2^{e_1} &\equiv (5p)^{e_2 \cdot e_1} \pmod{q}
 \end{align}
-$$
+```
 Từ đó ta có thể lập ra biểu thức: 
-$$
-A * 5^{e_2*{e_2}} - B*2^{e_1*{e_2}} \ ⋮ \ q \ (*)
-$$
+```math
+A \cdot 5^{e_2 \cdot e_1} - B \cdot 2^{e_1 \cdot e_2} \equiv 0 \pmod{q} \quad (*)
+```
 (p đã bị triệt tiêu)
 Từ biểu thức trên ta có thể suy ra rằng GCD(*,N) = q. Và ta có thể dễ dàng tính được p và q.
 
@@ -506,9 +524,9 @@ print(xor(b'label',13))
 
 ### Ý tưởng
 - Bài này cho ta biết tính chất của xor rằng:
-$$
-A ⊕ A  = 0
-$$
+```math
+A \oplus A = 0
+```
 
 ### Code 
 ```python=

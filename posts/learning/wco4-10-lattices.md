@@ -153,23 +153,28 @@ print(v.LLL())
 
 ```
 Điều này tức là:
-$$h \cdot f - k \cdot q = g$$
+
+```math
+h \cdot f - k \cdot q = g
+```
+
 Đồng thời `f`, `g` cũng là một số rất nhỏ so với `q` với 512 bits.
 - Vậy nên ý tưởng đặt ra là ta sẽ tạo ra một lattice gì đó có dạng là 2x2 là tối thiểu, và 2 kết quả `f`, `g` sẽ nằm trong danh sách các ma trận nhỏ nhất mà ta tìm được.
 - Cái khó nhất của mọi dạng bài này luôn là tìm ra lattice cần tìm. Với bài này thì mình sẽ có ý tưởng như sau:
 
-$$
+```math
 \begin{bmatrix} a & b \end{bmatrix} \cdot \begin{bmatrix} x & y \\ z & t \end{bmatrix} = \begin{bmatrix} f & g \end{bmatrix}
-$$
+```
 
 Với `a, b` là 2 hệ số tự do và `x, y, z, t` là ma trận cần tìm.
 Ta có nếu theo dạng trên thì $a \cdot y + b \cdot t = g$ mà ta lại có công thức của `g` ở trên. Vì thế ta suy ra được `a = f`, `q = h`, `b = k`, `t = q`.
 Kế đó ta quay về phương trình trên với $a \cdot x + b \cdot z = f \cdot x + k \cdot z = f$. Khúc này hiển nhiên `x = 1`, `z = 0`.
 Từ đó mình suy ra được ma trận:
 
-$$
+```math
 \begin{bmatrix} 1 & h \\ 0 & q \end{bmatrix}
-$$
+```
+
 - Đến đây thì ta dễ dàng tìm được flag.
 ![3](/img/learning/wco4-lattices/3.png)
 
@@ -291,9 +296,9 @@ print(flag.decode())
 ```
 Ta có `msg` chính là `flag`, và `public_key` đã được tạo ở trên mà ta không cần để tâm lắm. Bản chất hàm này đang thực hiện check từng bit của flag, nếu bit đó = 1 thì cộng giá trị của `bi` trong `public_key` vào ct, nếu = 0 thì giữ nguyên. Vậy nên nó thỏa một phương trình toán học là:
 
-$$
+```math
 a_1 \cdot b_1 + ... + a_n \cdot b_n = ct
-$$
+```
 
 Với `a` là từng bit của `flag`.
 - Từ ý tưởng trên mình đã tự dựng lại một bài toán đơn giản kèm một lattices để xem thử vì nhiệm vụ của ta là tìm về các bit 0-1 của flag nên có thể nói độ dài của vector đó khá nhỏ. Nhiệm vụ của ta là cần tìm về msg `1101`gốc.
@@ -411,4 +416,4 @@ for rows in range(reduced_M.nrows()):
     if find_flag(row):
         break
 ```
-Note: paper set cho ta 1/2 nhưng mình cảm thấy hơi bất tiện nên đã nhân 2 lên. Sau đó mình cũng có tìm hiểu thêm thì biết được rằng nếu $v$ là nghiệm thì $-v$ cũng là nghiệm nên 
+Note: paper set cho ta 1/2 nhưng mình cảm thấy hơi bất tiện nên đã nhân 2 lên. Sau đó mình cũng có tìm hiểu thêm thì biết được rằng nếu $v$ là nghiệm thì $-v$ cũng là nghiệm và sage sẽ trả về 1 trong 2 cái mà không biết cái nào đúng. Và vì thế ở ví dụ đầu của mình thật ra nó cũng  đúng...

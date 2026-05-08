@@ -996,11 +996,22 @@ for k_old in range(1, 61):
 ### Ý tưởng
 - Đọc đề thì ta có thể đoán ngay bài này là `biased nonce attack`. Và đúng thật khi `nonce` chỉ là một số 160 bit do `sha1` còn `n` thì lại là 256 bit. Giờ nhiệm vụ của ta là cần tìm lại `d`.
 - Khi đã chắc chắn thì ta sẽ tiến hành biến đổi lại công thức của `s` thành:
-$$(s^{-1}_i \cdot r_i)d - (-s_i^{-1} \cdot h_i) \equiv k \pmod{n}$$ 
+
+  ```math
+  (s^{-1}_i \cdot r_i)d - (-s_i^{-1} \cdot h_i) \equiv k \pmod{n}
+  ```
+
 - Đây là phương trình `HNP` dạng:
-$$t_i \cdot \alpha - a_i \equiv b_i \pmod{p}$$
+
+  ```math
+  t_i \cdot \alpha - a_i \equiv b_i \pmod{p}
+  ```
+
 - Từ đó ta dựng lên được 1 cơ sở lattice với $B = 2^{160}$:
-$$\mathbf{B} = \begin{bmatrix} p & 0 & 0 & 0 & 0 \\\\0 & p & 0 & 0 & 0 \\\\0 & 0 & p & 0 & 0 \\\\t_1 &t_2 & t_3 & B/p & 0 \\\\a_1 & a_2 & a_3 & 0 & B\end{bmatrix}$$
+
+```math
+\mathbf{B} = \begin{bmatrix} p & 0 & 0 & 0 & 0 \\ 0 & p & 0 & 0 & 0 \\ 0 & 0 & p & 0 & 0 \\ t_1 & t_2 & t_3 & B/p & 0 \\ a_1 & a_2 & a_3 & 0 & B \end{bmatrix}
+```
 - Sau đó ta áp dụng `LLL` và output cũng sẽ có dạng là ma trận 5x5 với từng hàng lần lượt là $(b_1, b_2, b_3,\alpha B/p,B)$. Từ L[3] ta sẽ tính ngược lại các giá trị $\alpha$ và kiểm tra xem giá trị nào là hợp lệ với bài toán. 
 - Sau khi có $\alpha$ tức `d` thì ta chỉ việc tìm flag như bình thường.
 [DSA/ECDSA and biased-nonce attack](https://sruthisekar.wordpress.com/wp-content/uploads/2024/11/ct13.pdf)
@@ -1150,13 +1161,19 @@ print(long_to_bytes(int(Q[0])).decode())
     - Tính $s = (h - xr) \cdot k^{-1} \pmod{p-1}$.
     - Và từ đó ta đã có s, r.
     - Cuối cùng ta được công thức tổng quát như sau:
-    $$g^{H(m)} \equiv (y)^r (r)^s \pmod p$$
+
+  ```math
+  g^{H(m)} \equiv y^r \cdot r^s \pmod{p}
+  ```
 
 - Quay ngược lại bài toán, như ta thấy thì nó không yêu cầu phải băm message, và vì thế ta có thể chọn một message bất kì hay cụ thể ở đây mình sẽ chọn m = 0. Lúc này công thức tổng quát của ta sẽ thành:
-$$1 \equiv g^{0} \equiv (y)^r (r)^s \pmod p$$
+
+```math
+1 \equiv g^{0} \equiv y^r \cdot r^s \pmod{p}
+```
+
 - Bây giờ việc duy nhất của ta là phải tìm r, s làm sao cho nó cũng = 1.
-- Lúc này giữa trên cảm tình của mình (làm đại) thì ta nhận thấy rằng, mình sẽ cho s = r, lúc này vế phải sẽ thành:
-$$(y*r)^r$$
+- Lúc này giữa trên cảm tình của mình (làm đại) thì ta nhận thấy rằng, mình sẽ cho s = r, lúc này vế phải sẽ thành: $(y \cdot r)^r$
 - Giờ để cho nó = 1 thì dễ thấy nhất, r sẽ bằng pow(y,-1,p). Lúc này vế phải sẽ = 1. Hết bài.
 
 ### Code
@@ -1241,20 +1258,44 @@ c.interactive()
 
 ### Ý tưởng
 - Bài này khác với bài trước là ta sẽ không được tự ý nhập m, tuy nhiên g luôn cố định = 2. Và lúc này công thức tổng quát của ta sẽ là:
-$$2^m \equiv y^r*r^s \pmod p$$
+
+```math
+2^m \equiv y^r \cdot r^s \pmod{p}
+```
+
 - Vấn đề lúc này thì bản thân mình nghĩ sẽ phụ thuộc phần lớn vào kĩ năng biến đổi và sự nhạy bén với số liệu của mỗi người cũng như là "ăn hên". 
-- Với mình thì ban đầu mình nghĩ rằng s phải liên quan đến m hoặc -m hoặc đại loại gì đó và cũng như ta phải tìm một cách nào đó để $y^r$ thành 1 hoặc làm sao để nó không ảnh hưởng tới phần cơ số vì cơ số luôn cố dịnh = 2. Và lúc đó mình đã nghĩ tới định lý fermat nhỏ: $y^{p-1} \equiv 1 \ (mod \ p)$, tức là r = p-1. Nhưng sau một lúc biến đổi thì nó lại thành ra như này:
-$$2^m \equiv 1*(p-1)^m \pmod p$$
+- Với mình thì ban đầu mình nghĩ rằng s phải liên quan đến m hoặc -m hoặc đại loại gì đó và cũng như ta phải tìm một cách nào đó để $y^r$ thành 1 hoặc làm sao để nó không ảnh hưởng tới phần cơ số vì cơ số luôn cố dịnh = 2. Và lúc đó mình đã nghĩ tới định lý fermat nhỏ: $y^{p-1} \equiv 1 \pmod{p}$, tức là r = p-1. Nhưng sau một lúc biến đổi thì nó lại thành ra như này:
+
+```math
+2^m \equiv 1 \cdot (p-1)^m \pmod{p}
+```
+
 =>
-$$2^m \equiv (-1)^m \pmod p$$
-- Lúc này chắc chắn là nó sai, và trong lúc đó thì mình vô tình rùa ra bằng cách để ý rằng $p \equiv 1 \ (mod \ 4)$, và lúc này mình nghĩ tới công thức $(x/p) \equiv x^{(p-1)/2} \ (mod \ p)$ của `Legendre Symbol` 
+
+```math
+2^m \equiv (-1)^m \pmod{p}
+```
+
+- Lúc này chắc chắn là nó sai, và trong lúc đó thì mình vô tình rùa ra bằng cách để ý rằng $p \equiv 1 \pmod{4}$, và lúc này mình nghĩ tới công thức $(x/p) \equiv x^{(p-1)/2} \pmod{p}$ của `Legendre Symbol` 
 > cái này hình như là rùa vì thực chất dữ kiện đó của p hình như giúp cho nó không rơi vào safe prime chứ chẳng liên quan gì tới cái này hết thì phải =)))
 - Lúc này mình đã biến đổi như sau:
-$$2^m \equiv y^{(p-1)/2}* (\frac{p-1}{2})^{-m} \pmod p$$
+
+```math
+2^m \equiv y^{(p-1)/2} \cdot \left(\frac{p-1}{2}\right)^{-m} \pmod{p}
+```
+
 =>
-$$2^m \equiv y^{(p-1)/2}* ((\frac{-1}{2})^{-1})^m \pmod p$$
-=> 
-$$2^m \equiv y^{(p-1)/2}* (-2)^m \pmod p$$
+
+```math
+2^m \equiv y^{(p-1)/2} \cdot \left(\left(\frac{-1}{2}\right)^{-1}\right)^m \pmod{p}
+```
+
+=>
+
+```math
+2^m \equiv y^{(p-1)/2} \cdot (-2)^m \pmod{p}
+```
+
 - Thì cái này sẽ đúng trong cụ thể 2 trường hợp: 1 là khi $y^{(p-1)/2}$ = 1 và m là số chẵn, 2 là khi $y^{(p-1)/2}$ = -1 và m là số lẻ.
 - Lúc này gần như là hết bài trừ việc ta phải biến đổi một chút làm sao cho thỏa điều kiện của hàm verify trong source code.
 

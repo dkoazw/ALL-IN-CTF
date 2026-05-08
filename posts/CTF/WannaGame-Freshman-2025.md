@@ -31,67 +31,80 @@ Khi đọc đề, chúng ta có e, d, hint, c.
 
 Để tìm ra flag, trước hết ta phải tìm được n bằng công thức:
 
-$$n = p  q$$
+```math
+n = p \cdot q
+```
 
 Và mình nảy ra ý tưởng bằng cách tìm p, q bằng hệ phương trình sau:
-$$
+
+```math
 \begin{cases}
-p + q = hint (1) \\
-pq = n (2)
+p + q = hint & (1) \\
+pq = n & (2)
 \end{cases}
-$$
+```
+
 Ta có thể biến đổi nó thành:
-$$
-x^2 - (\text{hint})\,x + n = 0(*)
-$$Với p và q là 2 nghiệm của phương trình
+
+```math
+x^2 - (\text{hint})\,x + n = 0 \quad (*)
+```
+
+Với p và q là 2 nghiệm của phương trình.
 
 Nhận thấy rằng:
-$$
+
+```math
 \begin{aligned}
 d &\equiv e^{-1} \pmod{\varphi} \\
 &\iff de \equiv 1 \pmod{\varphi} \\
 &\iff de - 1 \equiv 0 \pmod{\varphi}
 \end{aligned}
-$$
+```
 
 Từ đó suy ra:
-$$
+
+```math
 \begin{aligned}
 k\varphi &= de - 1 \\
-&\iff \varphi = \frac{de - 1}{k}(3)
+&\iff \varphi = \frac{de - 1}{k} \quad (3)
 \end{aligned}
-$$
+```
 
 Đồng thời ta cũng có:
-$$
+
+```math
 \begin{aligned}
 \varphi &= (p - 1)(q - 1) \\
 &\iff \varphi = pq - (p + q) + 1 \\
 &\iff \varphi = n - \text{hint} + 1 \\
-&\iff n = \varphi + \text{hint} - 1(4)
+&\iff n = \varphi + \text{hint} - 1 \quad (4)
 \end{aligned}
-$$
+```
 
 Thay (3) vào (4) lúc này ta có:
-$$
+
+```math
 n = \frac{de - 1}{k} + \text{hint} - 1
-$$
+```
 
 Xét lại phương trình (*)
-$$
-x^2 - (\text{hint})\,x + n = 0(*)
-$$
+
+```math
+x^2 - (\text{hint})\,x + n = 0 \quad (*)
+```
 
 Ta có:
-$$
+
+```math
 \Delta = (\text{hint})^2 - 4n
-$$
+```
 
 Và nghiệm của phương trình:
-$$
-p = \frac{\text{hint} + \sqrt{\Delta}}{2}, \qquad
-q = \frac{\text{hint} - \sqrt{\Delta}}{2}
-$$
+
+```math
+p = \frac{\text{hint} + \sqrt{\Delta}}{2}, \qquad q = \frac{\text{hint} - \sqrt{\Delta}}{2}
+```
 
 Giờ thì ta chỉ việc chạy trâu k trong khoảng từ 1-200000 để tìm ra nghiệm p và q nguyên dương.
 
@@ -158,45 +171,55 @@ Nhìn vào đề ta có n, leak, ct, e.
 
 Ta có:
 
-$$
-leak ≡ p^2 + q^2 \ (mod \ n)
-$$
+```math
+leak \equiv p^2 + q^2 \pmod{n}
+```
+
 Mà:
-$$
-p^2 + q^2  ≡ (p+q)^2 \ (mod \ n)
-$$
+
+```math
+p^2 + q^2 \equiv (p+q)^2 \pmod{n}
+```
+
 Vậy từ đó ta có thể suy ra rằng:
-$$
+
+```math
 (p+q)^2 = kn + leak
-$$
+```
 
 Gọi:
-$$
-S=\sqrt[2]{kn+leak}
-$$
+
+```math
+S = \sqrt{kn + leak}
+```
 
 Ta tiếp tục xét phương trình đã đề cập ở bài phiphai:
-$$
-x^2 - (\text{S})\,x + n = 0(*)
-$$Với p và q là 2 nghiệm của phương trình
+
+```math
+x^2 - S \cdot x + n = 0 \quad (*)
+```
+
+Với p và q là 2 nghiệm của phương trình.
 
 Ta có:
-$$
-\Delta = (\text{S})^2 - 4n
-$$
+
+```math
+\Delta = S^2 - 4n
+```
 
 Và nghiệm của phương trình:
-$$
-p = \frac{\text{S} + \sqrt{\Delta}}{2}, \qquad
-q = \frac{\text{S} - \sqrt{\Delta}}{2}
-$$
+
+```math
+p = \frac{S + \sqrt{\Delta}}{2}, \qquad q = \frac{S - \sqrt{\Delta}}{2}
+```
 
 Ta tiếp tục chạy trâu k từ 1-200000 để tìm ra p,q.
 
 Sau đó ta tính được:
-$$
-\varphi=(p-1)(q-1) 
-$$
+
+```math
+\varphi = (p-1)(q-1)
+```
 
 Và giải như một bài rsa thông thường.
 
@@ -528,9 +551,9 @@ Bước 3: ta sẽ xor đống trong đó thành ct1, ct2, ct3.
 Và nhiệm vụ của chúng ta là phải dịch ngược lại nó.
 
 Trước hết thì ta có tính chất của xor:
-$$
-A \oplus B\ \oplus A = B 
-$$
+```math
+A \oplus B \oplus A = B
+```
 Từ đây khi ta xor ct1, ct2, ct3, key3 thì ta sẽ có được weird.
 
 Khi đã có weird thì ta chỉ cần decode nó lại thành plaintext nhưng đã rot 13.
@@ -597,43 +620,53 @@ print(c)
 ```
 ## Ý tưởng
 Trước hết bài này mình sẽ chia thành 2 giai đoạn: 
-1. Là chạy trâu k để truy ngược đề về dạng $$ C \equiv m^e \ (mod \ m1) $$
+1. Là chạy trâu k để truy ngược đề về dạng $C \equiv m^e \pmod{m_1}$
 2. Là vận dụng crt(chinese remainder theorem) để tìm ra Flag.
 
 Về bước 1:
-Gọi $$ t4 \equiv\left( \left( m^e \bmod m_1 \right) \bmod m_2 \right) \bmod m_3  $$ 
-Lúc này: 
-$$
-c \equiv t4 \ (mod \ m4)
-$$
+Gọi $t_4 \equiv \left(\left(m^e \bmod m_1\right) \bmod m_2\right) \bmod m_3$
+
+Lúc này:
+
+```math
+c \equiv t_4 \pmod{m_4}
+```
+
 Từ đó suy ra:
-$$
-t4 = k4*m4 + c 
-$$
+
+```math
+t_4 = k_4 \cdot m_4 + c
+```
+
 Và ta tiếp tục truy ngược lên trên và biểu thức cuối cùng sẽ là:
-$$
-C = k4*m4 + k3*m3 + k2*m2 + c
-$$
+
+```math
+C = k_4 \cdot m_4 + k_3 \cdot m_3 + k_2 \cdot m_2 + c
+```
 
 Lúc này ta chỉ việc chạy trâu k2, k3, k4 từ 0->3. Ví dụ như: t4 = k4*m4+c thì khi k4=4, lúc này t4 > m3 => vô lý. Tương tự với t3, t2.
 
 Khi này bài toán đã về dạng rsa cơ bản tuy nhiên m1 lúc này không phải là tích của 2 số nguyên tố, và m1 cũng rất lớn để ta có thể phân tích thừa số nguyên tố của nó ra.
 
-Tuy nhiên (khúc này mình không biết chứng minh): 
-$$
-m1 =p1  * p2 * p3 * ... * pk
-$$
+Tuy nhiên (khúc này mình không biết chứng minh):
+
+```math
+m_1 = p_1 \cdot p_2 \cdot p_3 \cdots p_k
+```
 
 Thì ta không cần phải biết toàn bộ những số này mà chỉ cần tích của nó đủ lớn làm sao cho có thể > m cuối cùng mà ta phải tìm thì ta vẫn có thể ra flag.
 
-Và trong trường hợp này, mình phân tích m1 thành 
-$$
-13*107*87671*3870037838243*279462107025143615623321823017*1325706410421371952032007611396267 * R
-$$
+Và trong trường hợp này, mình phân tích m1 thành:
+
+```math
+13 \cdot 107 \cdot 87671 \cdot 3870037838243 \cdot 279462107025143615623321823017 \cdot 1325706410421371952032007611396267 \cdot R
+```
+
 Với R chưa biết (mình dùng factordb để phân tích)
 
 thì lúc này ta sẽ sử dụng crt để làm bằng cách là:
-$$
+
+```math
 \begin{cases}
 m \equiv C^{d_1} \pmod{13} \\
 m \equiv C^{d_2} \pmod{107} \\
@@ -642,7 +675,7 @@ m \equiv C^{d_4} \pmod{3870037838243} \\
 m \equiv C^{d_5} \pmod{279462107025143615623321823017} \\
 m \equiv C^{d_6} \pmod{1325706410421371952032007611396267}
 \end{cases}
-$$
+```
 
 Khi này ta chỉ cần dùng thư viện sage math để giải.
 
