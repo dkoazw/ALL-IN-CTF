@@ -31,9 +31,7 @@ Khi đọc đề, chúng ta có e, d, hint, c.
 
 Để tìm ra flag, trước hết ta phải tìm được n bằng công thức:
 
-$$
-n = p  q
-$$
+$$n = p  q$$
 
 Và mình nảy ra ý tưởng bằng cách tìm p, q bằng hệ phương trình sau:
 $$
