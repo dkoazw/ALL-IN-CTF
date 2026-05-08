@@ -157,12 +157,19 @@ $$h \cdot f - k \cdot q = g$$
 Đồng thời `f`, `g` cũng là một số rất nhỏ so với `q` với 512 bits.
 - Vậy nên ý tưởng đặt ra là ta sẽ tạo ra một lattice gì đó có dạng là 2x2 là tối thiểu, và 2 kết quả `f`, `g` sẽ nằm trong danh sách các ma trận nhỏ nhất mà ta tìm được.
 - Cái khó nhất của mọi dạng bài này luôn là tìm ra lattice cần tìm. Với bài này thì mình sẽ có ý tưởng như sau:
-$$\begin{bmatrix} a & b \end{bmatrix} \cdot \begin{bmatrix} x & y \\ z & t \end{bmatrix} = \begin{bmatrix} f & g \end{bmatrix}$$
+
+$$
+\begin{bmatrix} a & b \end{bmatrix} \cdot \begin{bmatrix} x & y \\ z & t \end{bmatrix} = \begin{bmatrix} f & g \end{bmatrix}
+$$
+
 Với `a, b` là 2 hệ số tự do và `x, y, z, t` là ma trận cần tìm.
 Ta có nếu theo dạng trên thì $a \cdot y + b \cdot t = g$ mà ta lại có công thức của `g` ở trên. Vì thế ta suy ra được `a = f`, `q = h`, `b = k`, `t = q`.
 Kế đó ta quay về phương trình trên với $a \cdot x + b \cdot z = f \cdot x + k \cdot z = f$. Khúc này hiển nhiên `x = 1`, `z = 0`.
 Từ đó mình suy ra được ma trận:
-$$\begin{bmatrix} 1 & h \\ 0 & q \end{bmatrix}$$
+
+$$
+\begin{bmatrix} 1 & h \\ 0 & q \end{bmatrix}
+$$
 - Đến đây thì ta dễ dàng tìm được flag.
 ![3](/img/learning/wco4-lattices/3.png)
 
