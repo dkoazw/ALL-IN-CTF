@@ -283,7 +283,11 @@ print(flag.decode())
         return ct
 ```
 Ta có `msg` chính là `flag`, và `public_key` đã được tạo ở trên mà ta không cần để tâm lắm. Bản chất hàm này đang thực hiện check từng bit của flag, nếu bit đó = 1 thì cộng giá trị của `bi` trong `public_key` vào ct, nếu = 0 thì giữ nguyên. Vậy nên nó thỏa một phương trình toán học là:
-$$a_1 \cdot b_1 + ... + a_n \cdot b_n = ct$$
+
+$$
+a_1 \cdot b_1 + ... + a_n \cdot b_n = ct
+$$
+
 Với `a` là từng bit của `flag`.
 - Từ ý tưởng trên mình đã tự dựng lại một bài toán đơn giản kèm một lattices để xem thử vì nhiệm vụ của ta là tìm về các bit 0-1 của flag nên có thể nói độ dài của vector đó khá nhỏ. Nhiệm vụ của ta là cần tìm về msg `1101`gốc.
 ![4](/img/learning/wco4-lattices/4.png)
@@ -400,4 +404,4 @@ for rows in range(reduced_M.nrows()):
     if find_flag(row):
         break
 ```
-Note: paper set cho ta 1/2 nhưng mình cảm thấy hơi bất tiện nên đã nhân 2 lên. Đồng thời ở bước tìm flag mình chia thành 2 case, lý do là nếu $v$ là nghiệm thì $-v$ cũng là nghiệm nên mình phải check cả 2.
+Note: paper set cho ta 1/2 nhưng mình cảm thấy hơi bất tiện nên đã nhân 2 lên. Sau đó mình cũng có tìm hiểu thêm thì biết được rằng nếu $v$ là nghiệm thì $-v$ cũng là nghiệm nên 
